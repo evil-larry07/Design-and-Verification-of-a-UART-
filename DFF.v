@@ -2,6 +2,7 @@ module DFF1 (
     input D,clk,in1,in2,in3,
     output t7
 );
+reg  Q;
     always @(posedge clk ) begin
         Q=D;
     end
