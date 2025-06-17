@@ -1,22 +1,22 @@
 module PISO(
-    input load,a,b,c,d,e,f,g,h,clk,tx
-    output Q
+    input load,a,b,c,d,e,f,g,h,clk,tx,
+    output t20
     );
     
-wire t1,t2,t3,t6,t7;
+wire t1,t2,t3,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19;
 assign t1= ~load;
 assign t2= load;
 
 assign t3= clk & ~tx;
 
-DFF1 instance1(.D(a), .clk(t3), .t7(t6), .in1(t2), .in2(t1), .in3(b) );
+DFF1 instance1(.D(a), .clk(t3), .t7(t7), .in1(t2), .in2(t1), .in3(b) );
 DFF1 instance2(.D(t7), .clk(t3), .t7(t8), .in1(t2), .in2(t1), .in3(c));
-DFF1 instance3(.D(t9), .clk(t3), .t7(t10), .in1(t2), .in2(t1), .in3(d));
-DFF1 instance4(.D(t11), .clk(t3), .t7(t12), .in1(t2), .in2(t1), .in3(e));
-DFF1 instance5(.D(t13), .clk(t3), .t7(t14), .in1(t2), .in2(t1), .in3(f));
-DFF1 instance6(.D(t15), .clk(t3), .t7(t16), .in1(t2), .in2(t1), .in3(g));
-DFF1 instance7(.D(t17), .clk(t3), .t7(t18), .in1(t2), .in2(t1), .in3(h));
-DFF1 instance8(.D(t19), .clk(t3), .t7(t20), .in1(1'b1), .in2(1'b0), .in3(1'b0));
+DFF1 instance3(.D(t8), .clk(t3), .t7(t10), .in1(t2), .in2(t1), .in3(d));
+DFF1 instance4(.D(t10), .clk(t3), .t7(t12), .in1(t2), .in2(t1), .in3(e));
+DFF1 instance5(.D(t12), .clk(t3), .t7(t14), .in1(t2), .in2(t1), .in3(f));
+DFF1 instance6(.D(t14), .clk(t3), .t7(t16), .in1(t2), .in2(t1), .in3(g));
+DFF1 instance7(.D(t16), .clk(t3), .t7(t18), .in1(t2), .in2(t1), .in3(h));
+DFF1 instance8(.D(t18), .clk(t3), .t7(t20), .in1(1'b1), .in2(1'b0), .in3(1'b0));
 
 
 endmodule
