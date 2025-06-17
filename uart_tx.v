@@ -9,14 +9,14 @@ assign t2= load;
 
 assign t3= clk & ~tx;
 
-DFF1_instance1(.D(a), .clk(t3), .Q(t6));
-DFF1_instance2(.D(t7), .clk(t3), .Q(t8));
-DFF1_instance3(.D(t9), .clk(t3), .Q(t10));
-DFF1_instance4(.D(t11), .clk(t3), .Q(t12));
-DFF1_instance5(.D(t13), .clk(t3), .Q(t14));
-DFF1_instance6(.D(t15), .clk(t3), .Q(t16));
-DFF1_instance7(.D(t17), .clk(t3), .Q(t18));
-DFF1_instance8(.D(t19), .clk(t3), .Q(t20));
+DFF1 instance1(.D(a), .clk(t3), .t7(t6), .in1(t2), .in2(t1), .in3(b) );
+DFF1 instance2(.D(t7), .clk(t3), .t7(t8), .in1(t2), .in2(t1), .in3(c));
+DFF1 instance3(.D(t9), .clk(t3), .t7(t10), .in1(t2), .in2(t1), .in3(d));
+DFF1 instance4(.D(t11), .clk(t3), .t7(t12), .in1(t2), .in2(t1), .in3(e));
+DFF1 instance5(.D(t13), .clk(t3), .t7(t14), .in1(t2), .in2(t1), .in3(f));
+DFF1 instance6(.D(t15), .clk(t3), .t7(t16), .in1(t2), .in2(t1), .in3(g));
+DFF1 instance7(.D(t17), .clk(t3), .t7(t18), .in1(t2), .in2(t1), .in3(h));
+DFF1 instance8(.D(t19), .clk(t3), .t7(t20), .in1(1'b1), .in2(1'b0), .in3(1'b0));
 
 
 endmodule
