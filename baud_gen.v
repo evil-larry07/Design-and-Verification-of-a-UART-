@@ -2,7 +2,7 @@ module BaudGen(
     input clk,
     output reg tick
 );
-    integer baudrate=5208;
+    integer baudrate=5208;      // 50MHz / 9600 (desired Baudrate)   =   5208          target Baudrate for tick
     integer count=0;
     always @(posedge clk)
     begin
