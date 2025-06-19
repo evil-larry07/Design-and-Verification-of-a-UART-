@@ -1,5 +1,5 @@
 module SIPO(
-    input t20,clk,rx;
+    input t20,clk,rx,
     output a,b,c,d,e,f,g,h
 );
 

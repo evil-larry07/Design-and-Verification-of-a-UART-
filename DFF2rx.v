@@ -1,6 +1,6 @@
 module DFF2rx(
-input D,clk;
-output reg Q;
+input D,clk
+output reg Q
 );
 
 always @(posedge clk)
