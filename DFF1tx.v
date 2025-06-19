@@ -1,4 +1,4 @@
-module DFF1 (
+module DFF1tx (
     input D,clk,in1,in2,in3,
     output t7
 );
