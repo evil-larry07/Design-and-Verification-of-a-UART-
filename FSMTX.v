@@ -1,54 +1,92 @@
 module FSMTX(
-    input [7:0]datain,
-    input clk,
+    input [7:0] datain,
+    input clk, reset, start,
     output Done,
+    output reg tx,
     output x
 );
-    reg tx,load;
+
+    reg load;
     wire tick;
+
     BaudGen instance1(.clk(clk), .tick(tick));
-    PISO instance2(.a(datain[7]), .b(datain[6]), .c(datain[5]), .d(datain[4]), .e(datain[3]), .f(datain[2]), .g(datain[1]), .h(datain[0]), .clk(tick), .load(load), .tx(tx), .t20(x));
+    PISO instance2(
+        .a(datain[7]), .b(datain[6]), .c(datain[5]), .d(datain[4]),
+        .e(datain[3]), .f(datain[2]), .g(datain[1]), .h(datain[0]),
+        .clk(tick), .load(load), .tx(tx), .t20(x)
+    );
 
-    parameter idle=3'b000, start=3'b001, data=3'b010, stop=3'b011, done=3'b100;
+    parameter idle = 3'b000,
+              start_s = 3'b001,
+              data  = 3'b010,
+              stop  = 3'b011,
+              done  = 3'b100;
 
-    reg [2:0] state,nstate;
-    integer i;
-    always @(*)
-    begin
-        case(state)
-            idle:
-            begin
-                tx =0;
-                nstate<=tx?idle:start;
-                
-            end
-            start:
-            begin
-                tx = 0;
-                nstate<=data;
-            end
-            data:
-            begin
+    reg [2:0] state, nstate;
+    reg [3:0] bit_cnt;
 
-                nstate<=stop;
-                tx<=1;
-            end
-            stop:nstate<=done;
-            done:nstate<=idle;
-            default:nstate<=idle;
+    // Combinational next-state logic
+    always @(*) begin
+        case (state)
+            idle:   nstate = (start) ? start_s : idle;
+            start_s:nstate = data;
+            data:   nstate = (bit_cnt == 8) ? stop : data;
+            stop:   nstate = done;
+            done:   nstate = idle;
+            default:nstate = idle;
         endcase
     end
-always @(posedge clk)
-begin
-    state<=nstate;
-    if(nstate == stop)  
+
+    // Sequential logic with reset
+    always @(posedge clk or posedge reset) 
     begin
-        for ( i=0 ;i<8 ;i=i+1 ) 
+        if (reset) 
             begin
-                load<=0;
+                state <= idle;
+                tx <= 1;
+                load <= 0;
+                bit_cnt <= 0;
+            end 
+        else 
+            begin
+                state <= nstate;
+
+                case (nstate)
+                    idle: 
+                        begin
+                            load <= 1;
+                            bit_cnt <= 0;
+                            tx <= 1;
+                        end
+
+                    start_s: 
+                        begin
+                            load <= 0;
+                            tx <= 0;
+                        end
+
+                    data: 
+                        begin
+                            tx <= 0;
+                            if (tick)
+                                bit_cnt <= bit_cnt + 1;
+                        end
+
+                    stop: 
+                        begin
+                            tx <= 1;
+                        end
+
+                    done: 
+                        begin
+                            tx <= 1;
+                        end
+                endcase
             end
-            load=1;
     end
-end
-assign Done = (state==done)? 1 : 0;
+
+    assign Done = (state == done);
+
 endmodule
+
+

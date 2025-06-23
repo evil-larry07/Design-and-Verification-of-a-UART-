@@ -16,49 +16,55 @@
 //  end
 // endmodule
 
-`timescale 1ns / 1ps
+module uart_tb;
 
-module FSMTX_tb;
-
-    // Inputs
-    reg clk;
-    wire x;
     reg [7:0] datain;
+    reg clk, reset, start;
+    wire Done, tx, x;
 
-    // Outputs
-    wire Done;
-
-    // Instantiate the FSMTX module
     FSMTX uut (
         .datain(datain),
         .clk(clk),
+        .reset(reset),
+        .start(start),
         .Done(Done),
+        .tx(tx),
         .x(x)
     );
 
-    // Generate a clock with 10ns period (100 MHz)
+    // Clock generation
     always #5 clk = ~clk;
 
     initial begin
-        // Initialize inputs
+        $display("Starting FSMTX Testbench...");
+
+        // Initial values
         clk = 0;
-        datain = 8'b10101010;  // Example UART data byte (LSB first)
+        reset = 1;
+        start = 0;
+        datain = 8'b10101010;
 
-        // Display simulation start
-        $display("Starting FSMTX simulation...");
-        $monitor("Time = %0t | Data = %b | Done = %b |  %d ", $time, datain, Done,x);
+        #20;
+        reset = 0;
+        #10;
 
-        // Wait 1000 ns to allow FSM to complete full transmission
-        #1000;
+        start = 1;
+        #10;
+        start = 0;
 
-        // Change input to test another transmission
-        datain = 8'b11001100;
+        // Monitor key signals
+        $monitor("Time=%0t | reset=%b | start=%b | tx=%b | Done=%b | x=%b", 
+                  $time, reset, start, tx, Done, x);
 
-        #1000;
+        // Run long enough for full transmission
+        #5000000;
 
-        $display("Simulation complete.");
+        $display("Finished transmission.");
         $finish;
     end
 
 endmodule
+
+
+
 

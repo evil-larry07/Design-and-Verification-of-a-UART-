@@ -7,14 +7,14 @@ module BaudGen(
     always @(posedge clk)
     begin
         if(count<baudrate)
-        begin
-            tick=0;
-            count++;
-        end
+            begin
+                tick<=0;
+                count<=count+1;
+            end
         else
             begin
-                tick=1;
-                count=0;
+                tick<=1;
+                count<=0;
             end
 
     end
