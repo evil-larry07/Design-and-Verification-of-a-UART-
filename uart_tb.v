@@ -16,55 +16,59 @@
 //  end
 // endmodule
 
-module uart_tb;
+`timescale 1ns / 1ps
 
+module FSMTX_tb;
+
+    reg clk, reset;
     reg [7:0] datain;
-    reg clk, reset, start;
-    wire Done, tx, x;
+    wire Done, x, tick;
 
     FSMTX uut (
-        .datain(datain),
         .clk(clk),
         .reset(reset),
-        .start(start),
+        .datain(datain),
         .Done(Done),
-        .tx(tx),
-        .x(x)
+        .x(x),
+        .tick(tick)
     );
 
     // Clock generation
-    always #5 clk = ~clk;
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; // 100MHz clock
+    end
+
+    integer tick_count = 0;
+    integer tx_count = 0;
 
     initial begin
-        $display("Starting FSMTX Testbench...");
+        $display("Starting FSMTX transmission test...");
+        datain = 8'b10110011;
+        reset = 1; #20; reset = 0;
+        $display("Transmission Started for byte: %b", datain);
+        $display("Tick\tX\tDone\tTx");
 
-        // Initial values
-        clk = 0;
-        reset = 1;
-        start = 0;
-        datain = 8'b10101010;
+        forever begin
+            @(posedge tick);
+            tick_count = tick_count + 1;
+            $display("%2d\t%b\t%b\t%b", tick_count, x, Done,uut.tx);
 
-        #20;
-        reset = 0;
-        #10;
-
-        start = 1;
-        #10;
-        start = 0;
-
-        // Monitor key signals
-        $monitor("Time=%0t | reset=%b | start=%b | tx=%b | Done=%b | x=%b", 
-                  $time, reset, start, tx, Done, x);
-
-        // Run long enough for full transmission
-        #5000000;
-
-        $display("Finished transmission.");
-        $finish;
+            if (Done) begin
+                tx_count = tx_count + 1;
+                $display("Transmission %0d Done!\n", tx_count);
+                if (tx_count == 2) begin
+                    $display("✅ Simulation complete after 2 transmissions.");
+                    $finish;
+                end
+                #40;
+                datain = (tx_count == 1) ? 8'b11001100 : 8'b00000000; // Only use 2 values
+                $display("Starting new transmission for byte: %b", datain);
+                reset = 1; #20; reset = 0;
+                tick_count = 0;
+            end
+        end
     end
 
 endmodule
-
-
-
 

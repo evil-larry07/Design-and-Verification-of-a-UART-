@@ -1,22 +1,32 @@
+// module BaudGen(
+//     input clk,
+//     output reg tick
+// );
+//     reg [7:0] count = 0;
+//     always @(posedge clk) begin
+//         if (count == 5208) begin
+//             count <= 0;
+//             tick <= 1;
+//         end else begin
+//             count <= count + 1;
+//             tick <= 0;
+//         end
+//     end
+// endmodule
+
 module BaudGen(
     input clk,
     output reg tick
 );
-    integer baudrate=5208;      // 50MHz / 9600 (desired Baudrate)   =   5208          target Baudrate for tick
-    integer count=0;
-    always @(posedge clk)
-    begin
-        if(count<baudrate)
-            begin
-                tick<=0;
-                count<=count+1;
-            end
-        else
-            begin
-                tick<=1;
-                count<=0;
-            end
+    reg [7:0] count = 0;
 
+    always @(posedge clk) begin
+        if (count >= 19) begin  // 20-cycle period
+            count <= 0;
+            tick <= 1;
+        end else begin
+            count <= count + 1;
+            tick <= 0;
+        end
     end
 endmodule
-
