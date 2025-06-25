@@ -52,7 +52,8 @@ module FSMTX_tb;
         forever begin
             @(posedge tick);
             tick_count = tick_count + 1;
-            $display("%2d\t%b\t%b\t%b", tick_count, x, Done,uut.tx);
+           $display("%2d\t%s\t%b\t%b", tick_count, (x === 1'bx) ? "x" : (x ? "1" : "0"), Done, uut.tx);
+
 
             if (Done) begin
                 tx_count = tx_count + 1;

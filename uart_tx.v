@@ -31,11 +31,15 @@ module PISO(
 
     always @(posedge clk) begin
         if (load) begin
-            data <= {a, b, c, d, e, f, g, h};
+            data <= {a, b, c, d, e, f, g, h};       // at load =1 data in parallely
             count <= 0;
         end else if (~tx) begin
-            t20 <= data[7 - count];
+            t20 <= data[count];         // data transmission from lsb first to msb
             count <= count + 1;
+        end
+        else 
+         begin
+            t20 <= 1'bx;  // or 1'b0 if you want a clean line
         end
     end
 endmodule

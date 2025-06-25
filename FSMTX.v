@@ -114,7 +114,8 @@ module FSMTX(
     reg [3:0] bit_cnt;
     reg [2:0] state, nstate;
 
-    parameter IDLE = 0, LOAD = 1, DATA = 2, STOP = 3, DONE = 4;
+    parameter IDLE = 0, LOAD = 1, DATA = 2, STOP = 3, DONE = 4, CLEANUP = 5;
+
 
     // Baud tick generator
     BaudGen instance1(.clk(clk), .tick(tick));
@@ -133,7 +134,8 @@ module FSMTX(
             LOAD:  nstate = DATA;
             DATA:  nstate = (bit_cnt == 8) ? STOP : DATA;
             STOP:  nstate = DONE;
-            DONE:  nstate = IDLE;
+            DONE:  nstate = CLEANUP;
+            CLEANUP: nstate = IDLE;
             default: nstate = IDLE;
         endcase
     end
@@ -164,6 +166,12 @@ module FSMTX(
                 end
                 STOP: tx <= 1;
                 DONE: tx <= 1;
+                CLEANUP: begin
+                        tx <= 1;
+                        load <= 0;
+                        bit_cnt <= 0;
+                    end
+
             endcase
         end
     end
