@@ -18,10 +18,10 @@ module BaudGen(
     input clk,
     output reg tick
 );
-    reg [7:0] count = 0;
+    reg [12:0] count = 0;
 
     always @(posedge clk) begin
-        if (count >= 19) begin  // 20-cycle period
+        if (count >= 5207) begin  // 20-cycle period
             count <= 0;
             tick <= 1;
         end else begin

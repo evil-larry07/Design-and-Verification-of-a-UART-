@@ -36,7 +36,7 @@ module FSMTX_tb;
     // Clock generation
     initial begin
         clk = 0;
-        forever #5 clk = ~clk; // 100MHz clock
+        forever #20 clk = ~clk; // 50MHz clock
     end
 
     integer tick_count = 0;
@@ -59,7 +59,7 @@ module FSMTX_tb;
                 tx_count = tx_count + 1;
                 $display("Transmission %0d Done!\n", tx_count);
                 if (tx_count == 2) begin
-                    $display("✅ Simulation complete after 2 transmissions.");
+                    $display(" Simulation complete after 2 transmissions.");
                     $finish;
                 end
                 #40;

@@ -107,40 +107,46 @@ module FSMTX(
     input reset,
     input [7:0] datain,
     output Done,
-    output x,
-    output tick   // <-- exposed
+    output wire x,  // Make x a wire
+    output tick     // Baud tick exposed
 );
+
     reg tx, load;
     reg [3:0] bit_cnt;
     reg [2:0] state, nstate;
 
     parameter IDLE = 0, LOAD = 1, DATA = 2, STOP = 3, DONE = 4, CLEANUP = 5;
 
-
     // Baud tick generator
     BaudGen instance1(.clk(clk), .tick(tick));
 
-    // Parallel-In Serial-Out
+    // Internal wire to receive output from PISO
+    wire t20_internal;                      //cuz we can assign wire to x after transmission is stoped
+
+    // Parallel-In Serial-Out module
     PISO instance2(
         .a(datain[7]), .b(datain[6]), .c(datain[5]), .d(datain[4]),
         .e(datain[3]), .f(datain[2]), .g(datain[1]), .h(datain[0]),
-        .clk(tick), .load(load), .tx(tx), .t20(x)
+        .clk(tick), .load(load), .tx(tx), .t20(t20_internal)
     );
+
+    // Assign x = 'x' when tx = 1 (idle); otherwise pass data bit
+    assign x = (tx == 1'b1) ? 1'bx : t20_internal;
 
     // Next state logic
     always @(*) begin
-        case(state)
-            IDLE:  nstate = LOAD;
-            LOAD:  nstate = DATA;
-            DATA:  nstate = (bit_cnt == 8) ? STOP : DATA;
-            STOP:  nstate = DONE;
-            DONE:  nstate = CLEANUP;
+        case (state)
+            IDLE:    nstate = LOAD;
+            LOAD:    nstate = DATA;
+            DATA:    nstate = (bit_cnt == 8) ? STOP : DATA;
+            STOP:    nstate = DONE;
+            DONE:    nstate = CLEANUP;
             CLEANUP: nstate = IDLE;
             default: nstate = IDLE;
         endcase
     end
 
-    // State transitions and outputs
+    // Sequential logic for state transitions and outputs
     always @(posedge tick or posedge reset) begin
         if (reset) begin
             state <= IDLE;
@@ -151,27 +157,30 @@ module FSMTX(
             state <= nstate;
             case (state)
                 IDLE: begin
-                    bit_cnt <= 0;
-                    load <= 0;
                     tx <= 1;
+                    load <= 0;
+                    bit_cnt <= 0;
                 end
                 LOAD: begin
-                    load <= 1;
                     tx <= 1;
+                    load <= 1;
                 end
                 DATA: begin
-                    load <= 0;
                     tx <= 0;
+                    load <= 0;
                     bit_cnt <= bit_cnt + 1;
                 end
-                STOP: tx <= 1;
-                DONE: tx <= 1;
+                STOP: begin
+                    tx <= 1;
+                end
+                DONE: begin
+                    tx <= 1;
+                end
                 CLEANUP: begin
-                        tx <= 1;
-                        load <= 0;
-                        bit_cnt <= 0;
-                    end
-
+                    tx <= 1;
+                    load <= 0;
+                    bit_cnt <= 0;
+                end
             endcase
         end
     end
