@@ -43,6 +43,10 @@ module FSMTX_tb;
     integer tx_count = 0;
 
     initial begin
+        $display("Time\tTick\tX\tbit_cnt\tLoad\tDone\tState");
+        $dumpfile("FSMTX_tb.vcd");
+        $dumpvars(0, FSMTX_tb);
+
         $display("Starting FSMTX transmission test...");
         datain = 8'b10110011;
         reset = 1; #20; reset = 0;

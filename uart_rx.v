@@ -1,28 +1,29 @@
 module SIPO(
-    input t20,clk,rx,
-    output a,b,c,d,e,f,g,h
+    input clk,
+    input shift_en,
+    input data_in,
+    output a, b, c, d, e, f, g, h
 );
 
-wire t21,t22,t23,t24,t25,t26,t27,t28,t29;
+    wire t1, t2, t3, t4, t5, t6, t7, t8;
 
-assign t29 = clk&~rx;
+    wire gated_clk = clk & shift_en;
 
-DFF2rx instance1(.D(t20), .clk(t29), .Q(t21));
-DFF2rx instance2(.D(t21), .clk(t29), .Q(t22));
-DFF2rx instance3(.D(t22), .clk(t29), .Q(t23));
-DFF2rx instance4(.D(t23), .clk(t29), .Q(t24));
-DFF2rx instance5(.D(t24), .clk(t29), .Q(t25));
-DFF2rx instance6(.D(t25), .clk(t29), .Q(t26));
-DFF2rx instance7(.D(t26), .clk(t29), .Q(t27));
-DFF2rx instance8(.D(t27), .clk(t29), .Q(t28));
+    DFF2rx d0(.D(data_in), .clk(gated_clk), .Q(t1));
+    DFF2rx d1(.D(t1), .clk(gated_clk), .Q(t2));
+    DFF2rx d2(.D(t2), .clk(gated_clk), .Q(t3));
+    DFF2rx d3(.D(t3), .clk(gated_clk), .Q(t4));
+    DFF2rx d4(.D(t4), .clk(gated_clk), .Q(t5));
+    DFF2rx d5(.D(t5), .clk(gated_clk), .Q(t6));
+    DFF2rx d6(.D(t6), .clk(gated_clk), .Q(t7));
+    DFF2rx d7(.D(t7), .clk(gated_clk), .Q(t8));
 
-assign a = t21;
-assign b = t22;
-assign c = t23;
-assign d = t24;
-assign e = t25;
-assign f = t26;
-assign g = t27;
-assign h = t28;
-
+    assign a = t8;
+    assign b = t7;
+    assign c = t6;
+    assign d = t5;
+    assign e = t4;
+    assign f = t3;
+    assign g = t2;
+    assign h = t1;
 endmodule
