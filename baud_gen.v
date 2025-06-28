@@ -3,7 +3,7 @@ module BaudGen(
     output reg tick
 );
 
-    reg [12:0] count = 0;           //cuz 5208 requiers 13 bit in binary 
+    reg [4:0] count = 0;                       //cuz 20 requiers 5 bit in binary 
 
     always @(posedge clk) 
     begin                   

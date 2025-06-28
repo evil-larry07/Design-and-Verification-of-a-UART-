@@ -1,3 +1,34 @@
+module PISO(
+    input a, b, c, d, e, f, g, h,
+    input clk, load, tx,
+    output reg t20
+);
+    reg [7:0] data;
+    reg [2:0] count = 0;
+
+    always @(posedge clk) begin
+        if (load) begin
+            data <= {a, b, c, d, e, f, g, h};       // at load =1 data in parallely
+            count <= 0;
+        end else if (~tx) begin
+            t20 <= data[count];                     // data transmission from lsb first to msb
+            count <= count + 1;
+        end
+        else 
+         begin
+            t20 <= 1'bx;  // therefore at tx==1 output ==x cuz it is stop bit
+        end
+    end
+endmodule
+
+
+
+
+
+
+
+
+
 // module PISO(
 //     input load,a,b,c,d,e,f,g,h,clk,tx,
 //     output t20
@@ -21,25 +52,3 @@
 
 // endmodule
 
-module PISO(
-    input a, b, c, d, e, f, g, h,
-    input clk, load, tx,
-    output reg t20
-);
-    reg [7:0] data;
-    reg [2:0] count = 0;
-
-    always @(posedge clk) begin
-        if (load) begin
-            data <= {a, b, c, d, e, f, g, h};       // at load =1 data in parallely
-            count <= 0;
-        end else if (~tx) begin
-            t20 <= data[count];         // data transmission from lsb first to msb
-            count <= count + 1;
-        end
-        else 
-         begin
-            t20 <= 1'bx;  // or 1'b0 if you want a clean line
-        end
-    end
-endmodule
