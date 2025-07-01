@@ -23,7 +23,7 @@ module FSMTX(
     
 
     // Assign x = 'x' when tx = 1 (idle); otherwise pass data bit
-    assign x = (tx == 1'b1) ? 1'bx : t20_internal;      //this stops data transmission after the stop bit
+    assign x = (tx == 1'b1) ? 1'b1 : t20_internal;      //this stops data transmission after the stop bit
 
     // Next state logic acc to stat diagram
     always @(*) begin

@@ -16,7 +16,7 @@ module PISO(
         end
         else 
          begin
-            t20 <= 1'bx;  // therefore at tx==1 output ==x cuz it is stop bit
+            t20 <= 1'b1;  // therefore at tx==1 output ==x cuz it is stop bit
         end
     end
 endmodule

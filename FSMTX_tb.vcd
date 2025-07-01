@@ -1,5 +1,5 @@
 $date
-	Thu Jun 26 23:04:12 2025
+	Tue Jul 01 21:08:45 2025
 $end
 $version
 	Icarus Verilog
@@ -37,7 +37,7 @@ $var reg 3 4 state [2:0] $end
 $var reg 1 5 tx $end
 $scope module instance1 $end
 $var wire 1 $ clk $end
-$var reg 13 6 count [12:0] $end
+$var reg 5 6 count [4:0] $end
 $var reg 1 " tick $end
 $upscope $end
 $scope module instance2 $end
@@ -95,7 +95,7 @@ b10110011 %
 0$
 0#
 x"
-x!
+1!
 $end
 #20000
 0"
@@ -196,6 +196,7 @@ b10011 6
 0$
 #780000
 b10 3
+1*
 b1 4
 b1 '
 1"
@@ -512,9 +513,7 @@ b10011 6
 #3160000
 0$
 #3180000
-1!
 b1 ?
-1*
 b10 1
 b100 '
 1"
@@ -1365,7 +1364,6 @@ b10011 6
 #9560000
 0$
 #9580000
-x!
 b101 3
 b1 ?
 15
@@ -1475,7 +1473,6 @@ b10011 6
 0$
 #10380000
 b0 3
-x*
 0#
 b101 4
 b1 (
@@ -2766,7 +2763,6 @@ b10011 6
 #19960000
 0$
 #19980000
-x!
 b101 3
 b1 ?
 0*
@@ -2877,7 +2873,7 @@ b10011 6
 0$
 #20780000
 b0 3
-x*
+1*
 0#
 b101 4
 b10 (
