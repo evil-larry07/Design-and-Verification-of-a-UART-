@@ -42,8 +42,8 @@ module FSMRX_tb;
         $display("Starting FSMRX test...");
 
         @(posedge clk);
-        $display("Sending first byte: 00011001");
-        send_byte(8'b00011001);
+        $display("Sending first byte: 10010101");
+        send_byte(8'b10010101);
         wait (Done); #5;
         $display("Received: %b", dataout);
 

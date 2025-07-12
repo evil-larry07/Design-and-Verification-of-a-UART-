@@ -1,5 +1,5 @@
 $date
-	Tue Jul 01 21:07:29 2025
+	Sat Jul 12 10:31:46 2025
 $end
 $version
 	Icarus Verilog
@@ -58,42 +58,42 @@ $var wire 1 ; t4 $end
 $var wire 1 < t3 $end
 $var wire 1 = t2 $end
 $var wire 1 > t1 $end
-$scope module d0 $end
+$scope module instance1 $end
 $var wire 1 % D $end
 $var wire 1 ! clk $end
 $var reg 1 > Q $end
 $upscope $end
-$scope module d1 $end
+$scope module instance2 $end
 $var wire 1 > D $end
 $var wire 1 ! clk $end
 $var reg 1 = Q $end
 $upscope $end
-$scope module d2 $end
+$scope module instance3 $end
 $var wire 1 = D $end
 $var wire 1 ! clk $end
 $var reg 1 < Q $end
 $upscope $end
-$scope module d3 $end
+$scope module instance4 $end
 $var wire 1 < D $end
 $var wire 1 ! clk $end
 $var reg 1 ; Q $end
 $upscope $end
-$scope module d4 $end
+$scope module instance5 $end
 $var wire 1 ; D $end
 $var wire 1 ! clk $end
 $var reg 1 : Q $end
 $upscope $end
-$scope module d5 $end
+$scope module instance6 $end
 $var wire 1 : D $end
 $var wire 1 ! clk $end
 $var reg 1 9 Q $end
 $upscope $end
-$scope module d6 $end
+$scope module instance7 $end
 $var wire 1 9 D $end
 $var wire 1 ! clk $end
 $var reg 1 8 Q $end
 $upscope $end
-$scope module d7 $end
+$scope module instance8 $end
 $var wire 1 8 D $end
 $var wire 1 ! clk $end
 $var reg 1 7 Q $end
@@ -149,7 +149,7 @@ $end
 b1 6
 0#
 0%
-b11001 ?
+b10010101 ?
 1$
 #2000
 0$
@@ -247,7 +247,7 @@ b10011 6
 #39000
 bx0 "
 bx0 *
-0&
+0.
 0>
 1!
 b0 6
@@ -354,11 +354,11 @@ b10011 6
 #78000
 0$
 #79000
-0'
+0&
 0=
-bx01 "
-bx01 *
-1&
+b0xxxxxx1 "
+b0xxxxxx1 *
+1.
 1>
 1!
 b0 6
@@ -465,13 +465,13 @@ b10011 6
 #118000
 0$
 #119000
-0&
+0.
 0>
-1'
+1&
 1=
-bx010 "
-bx010 *
-0(
+b10xxxxx0 "
+b10xxxxx0 *
+0'
 0<
 1!
 b0 6
@@ -482,6 +482,7 @@ b0 6
 0!
 b1 6
 b10 4
+1%
 b10 @
 1$
 #122000
@@ -577,14 +578,16 @@ b10011 6
 #158000
 0$
 #159000
-0)
+0(
 0;
-1(
+1'
 1<
-bx0100 "
-bx0100 *
-0'
+0&
 0=
+b10xxxx1 "
+b10xxxx1 *
+1.
+1>
 1!
 b0 6
 1$
@@ -594,7 +597,7 @@ b0 6
 0!
 b1 6
 b11 4
-1%
+0%
 b11 @
 1$
 #162000
@@ -690,15 +693,17 @@ b10011 6
 #198000
 0$
 #199000
+0.
+0>
 1&
-1>
-0(
+1=
+0'
 0<
-1)
+1(
 1;
-bx01001 "
-bx01001 *
-0+
+b1010xxx0 "
+b1010xxx0 *
+0)
 0:
 1!
 b0 6
@@ -709,6 +714,7 @@ b0 6
 0!
 b1 6
 b100 4
+1%
 b100 @
 1$
 #202000
@@ -804,16 +810,20 @@ b10011 6
 #238000
 0$
 #239000
-0,
+0+
 09
-1+
+1)
 1:
-0)
+0(
 0;
-bx010011 "
-bx010011 *
 1'
-1=
+1<
+0&
+0=
+b1010xx1 "
+b1010xx1 *
+1.
+1>
 1!
 b0 6
 1$
@@ -919,17 +929,21 @@ b10011 6
 #278000
 0$
 #279000
-0&
-0>
-1(
-1<
-0+
-0:
-1,
-19
-b0x100110 "
-b0x100110 *
 0.
+0>
+1&
+1=
+0'
+0<
+1(
+1;
+0)
+0:
+1+
+19
+b101010x0 "
+b101010x0 *
+0,
 08
 1!
 b0 6
@@ -1037,15 +1051,19 @@ b10011 6
 #319000
 0-
 07
-1.
+1,
 18
-0,
+0+
 09
 1)
-1;
-b10001100 "
-b10001100 *
-0'
+1:
+0(
+0;
+1'
+1<
+b1010100 "
+b1010100 *
+0&
 0=
 1!
 b0 6
@@ -1056,6 +1074,7 @@ b0 6
 0!
 b1 6
 b111 4
+1%
 b111 @
 1$
 #322000
@@ -1151,14 +1170,20 @@ b10011 6
 #358000
 0$
 #359000
-0(
+1.
+1>
+0'
 0<
+1(
+1;
+0)
+0:
 1+
-1:
-0.
+19
+0,
 08
-b1011000 "
-b1011000 *
+b101011 "
+b101011 *
 1-
 17
 1!
@@ -1170,8 +1195,6 @@ b0 6
 0!
 b1 6
 b11 5
-b0 4
-1%
 b1000 @
 1$
 #362000
@@ -1270,13 +1293,17 @@ b10011 6
 0-
 07
 1,
-19
-0)
+18
+0+
+09
+1)
+1:
+0(
 0;
-b110001 "
-b110001 *
+b10010101 "
+b10010101 *
 1&
-1>
+1=
 1!
 b0 6
 1$
@@ -1298,6 +1325,7 @@ b10 6
 0$
 #405000
 b11 6
+b0 4
 0#
 1$
 #406000
