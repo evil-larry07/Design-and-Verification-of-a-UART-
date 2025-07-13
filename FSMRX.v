@@ -9,13 +9,13 @@ module FSMRX(
     wire a, b, c, d, e, f, g, h;
     assign dataout = {h, g, f, e, d, c, b, a };  // LSB first
 
-    BaudGen baudgen(.clk(clk), .tick(tick));
-    SIPO sipo(.clk(tick), .data_in(rx), .a(a), .b(b), .c(c), .d(d), .e(e), .f(f), .g(g), .h(h));
-
     reg [2:0] state = 0;
     reg [2:0] bit_cnt = 0;
 
     parameter IDLE = 0, START = 1, DATA = 2, STOP = 3, DONE_STATE = 4;
+
+    BaudGen baudgen(.clk(clk), .tick(tick));
+    SIPO sipo(.clk(tick), .data_in(rx), .a(a), .b(b), .c(c), .d(d), .e(e), .f(f), .g(g), .h(h));
 
     always @(posedge clk) 
         begin
