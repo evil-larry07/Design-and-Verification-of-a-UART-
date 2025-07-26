@@ -122,5 +122,6 @@ This project involves the design and functional verification of a **Universal As
 ---
 
 ## 👨‍💻 Author
-- **Saksham Sinha** –  ECE Undergraduate, Interested in Digital Design, VLSI, and Embedded Systems 
 - **Aaditya Chauhan** – ECE Undergraduate, Interested in Digital Design, VLSI, and Embedded Systems
+- **Saksham Sinha** –  ECE Undergraduate, Interested in Digital Design, VLSI, and Embedded Systems 
+
