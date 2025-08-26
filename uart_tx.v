@@ -15,7 +15,7 @@ module PISO(
             end 
         else if (~tx) 
             begin
-                t20 <= data[count];                     // data transmission from lsb first to msb
+                t20 <= data[count];                     // data transmission from lsb first to msb firstly data[0] then count inc then data[1]
                 count <= count + 1;
             end
         else 
